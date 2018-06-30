@@ -1,0 +1,20 @@
+{
+  "name": "@dbrowser/vfs",
+  "version": "0.1.1",
+  "description": "Repository To Create and Manage dBrowser's Virtual File System.",
+  "contributors": [
+    "Jared Rice Sr. <jared@dwebs.io>",
+    "Bench Computer, Inc. <legal@benchx.io>"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard *.js"
+  },
+  "dependencies": {
+    "text-extensions": "^1.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
