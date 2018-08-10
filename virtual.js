@@ -92,7 +92,7 @@ class VFSystemFolder_User extends VFSystemFolder {
       // remove their profile vault if its in there (we want the direct source)
       vaults = vaults.filter(a => a.url !== this._profile._origin)
       // now add their profile vault to the front
-      let profileVault = new DPackVault(this._profile._origin)
+      let profileVault = new DWebVault(this._profile._origin)
       let profileVaultInfo = await profileVault.getInfo()
       vaults.unshift(profileVaultInfo)
     }

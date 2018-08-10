@@ -1,9 +1,9 @@
-/* globals DPackVault */
+/* globals DWebVault */
 
 const {VFSNode, VFSystemContainer} = require('./base')
 const {diffUpdate, sortCompare} = require('./util')
 const TEXTUAL_FILE_FORMATS = require('text-extensions')
-TEXTUAL_FILE_FORMATS.push('dpackignore')
+TEXTUAL_FILE_FORMATS.push('dwebignore')
 
 const STANDARD_VAULT_TYPES = [
   'application',
@@ -33,7 +33,7 @@ class VFSystemVaultContainer extends VFSystemContainer {
 
   async readData () {
     // load all children
-    this._vault = this._vault || new DPackVault(this._vaultInfo.url)
+    this._vault = this._vault || new DWebVault(this._vaultInfo.url)
     var fileInfos = await this._vault.readdir(this._path, {stat: true})
     var newFiles = fileInfos.map(fileInfo => {
       const path = this._path + '/' + fileInfo.name
@@ -76,11 +76,11 @@ class VFSystemVault extends VFSystemVaultContainer {
   get mtime () { return this._vaultInfo.mtime }
 
   async copy (newPath, targetVaultKey) {
-    this._vault = this._vault || new DPackVault(this._vaultInfo.key)
+    this._vault = this._vault || new DWebVault(this._vaultInfo.key)
     if (this._vaultInfo.key === targetVaultKey) {
       await this._vault.copy('/', newPath)
     } else {
-      await DPackVault.exportToVault({
+      await DWebVault.exportToVault({
         src: this._vault.url,
         dst: `dweb://${targetVaultKey}${newPath}`,
         skipUndownloadedFiles: true
@@ -89,7 +89,7 @@ class VFSystemVault extends VFSystemVaultContainer {
   }
 
   async delete () {
-    return DPackVault.unlink(this._vaultInfo.url)
+    return DWebVault.unlink(this._vaultInfo.url)
   }
 }
 
@@ -123,7 +123,7 @@ class VFSystemVaultFolder extends VFSystemVaultContainer {
     if (this._vaultInfo.key === targetVaultKey) {
       await this._vault.copy(this._path, newPath)
     } else {
-      await DPackVault.exportToVault({
+      await DWebVault.exportToVault({
         src: this._vault.url + this._path,
         dst: `dweb://${targetVaultKey}${newPath}`,
         skipUndownloadedFiles: true
@@ -135,7 +135,7 @@ class VFSystemVaultFolder extends VFSystemVaultContainer {
     if (this._vaultInfo.key === targetVaultKey) {
       await this._vault.rename(this._path, newPath)
     } else {
-      await DPackVault.exportToVault({
+      await DWebVault.exportToVault({
         src: this._vault.url + this._path,
         dst: `dweb://${targetVaultKey}${newPath}`,
         skipUndownloadedFiles: true
@@ -212,7 +212,7 @@ class VFSystemVaultFile extends VFSNode {
     if (this._vaultInfo.key === targetVaultKey) {
       await this._vault.copy(this._path, newPath)
     } else {
-      await DPackVault.exportToVault({
+      await DWebVault.exportToVault({
         src: this._vault.url + this._path,
         dst: `dweb://${targetVaultKey}${newPath}`,
         skipUndownloadedFiles: true
@@ -224,7 +224,7 @@ class VFSystemVaultFile extends VFSNode {
     if (this._vaultInfo.key === targetVaultKey) {
       await this._vault.rename(this._path, newPath)
     } else {
-      await DPackVault.exportToVault({
+      await DWebVault.exportToVault({
         src: this._vault.url + this._path,
         dst: `dweb://${targetVaultKey}${newPath}`,
         skipUndownloadedFiles: true
