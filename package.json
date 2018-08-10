@@ -1,6 +1,6 @@
 {
   "name": "@dbrowser/vfs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Repository To Create and Manage dBrowser's Virtual File System.",
   "contributors": [
     "Jared Rice Sr. <jared@dwebs.io>",
